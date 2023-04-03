@@ -1,0 +1,57 @@
+class Fruit
+{
+	field int x, y, previousX, previousY;
+	field int size;
+	field Random random;
+
+	constructor Fruit new()
+	{
+		let x = 100;
+  		let y = 100;
+  		let size = SnakeBody.getSize();
+		let random = Random.new();
+
+  		do draw();
+  		return this;
+	}
+
+	method void dispose()
+	{
+		do random.dispose();
+        do Memory.deAlloc(this);
+      	return;
+   	}
+
+	method void draw()
+	{
+        //renew fruit
+	    do Screen.setColor(false);
+        do Screen.drawRectangle(previousX, previousY, previousX + size, previousY + size);
+
+		do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + size, y + size);
+      	return;
+	}
+
+   	method void setPosition()
+	{
+		let previousX = x;
+		let previousY = y;
+
+        //generate new fruit coordinates
+		let x = random.randomX(previousX);
+		let y = random.randomY(previousY);
+		do draw();
+		return;
+	}
+
+	method boolean resetPosition(int collisionX, int collisionY)
+	{
+		if(collisionX > (x - 4) & collisionX < (x + 8) & collisionY > (y - 4) & collisionY < (y + 8))
+		{	
+			do setPosition();
+			return true;
+		}
+		return false;
+	}
+}
