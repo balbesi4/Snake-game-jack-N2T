@@ -25,12 +25,16 @@ class Fruit
 	method void draw()
 	{
         //renew fruit
-	    do Screen.setColor(false);
-        do Screen.drawRectangle(previousX, previousY, previousX + size, previousY + size);
-
-		do Screen.setColor(true);
-        do Screen.drawRectangle(x, y, x + size, y + size);
+		do reDraw(false, previousX, previousY, previousX + size, previousY + size);
+		do reDraw(true, x, y, x + size, y + size);
       	return;
+	}
+
+	method void reDraw(boolean color, int x1, int y1, int x2, int y2)
+	{
+		do Screen.setColor(color);
+		do Screen.drawRectangle(x1, y1, x2, y2);
+		return;
 	}
 
    	method void setPosition()
