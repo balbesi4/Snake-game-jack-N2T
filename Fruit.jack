@@ -1,0 +1,61 @@
+class Fruit
+{
+	field int x, y, previousX, previousY;
+	field int size;
+	field Random random;
+
+	constructor Fruit new()
+	{
+		let random = Random.new();
+  		let size = 4;
+		let x = 100;
+  		let y = 100;
+
+  		do draw();
+  		return this;
+	}
+
+	method void dispose()
+	{
+		do random.dispose();
+        do Memory.deAlloc(this);
+      	return;
+   	}
+
+	method void draw()
+	{
+        //renew fruit
+		do reDraw(false, previousX, previousY, previousX + size, previousY + size);
+		do reDraw(true, x, y, x + size, y + size);
+      	return;
+	}
+
+	method void reDraw(boolean color, int x1, int y1, int x2, int y2)
+	{
+		do Screen.setColor(color);
+		do Screen.drawRectangle(x1, y1, x2, y2);
+		return;
+	}
+
+   	method void setPosition()
+	{
+		let previousX = x;
+		let previousY = y;
+
+        //generate new fruit coordinates
+		let x = random.randomX(previousX);
+		let y = random.randomY(previousY);
+		do draw();
+		return;
+	}
+
+	method boolean resetPosition(int collisionX, int collisionY)
+	{
+		if(collisionX > (x - 4) & collisionY > (y - 4) & collisionX < (x + 8) & collisionY < (y + 8))
+		{	
+			do setPosition();
+			return true;
+		}
+		return false;
+	}
+}
