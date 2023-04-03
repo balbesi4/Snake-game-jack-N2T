@@ -6,8 +6,8 @@ class Fruit
 
 	constructor Fruit new()
 	{
-  		let size = SnakeBody.getSize();
 		let random = Random.new();
+  		let size = 4;
 		let x = 100;
   		let y = 100;
 
