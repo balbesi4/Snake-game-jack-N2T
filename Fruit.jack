@@ -6,10 +6,10 @@ class Fruit
 
 	constructor Fruit new()
 	{
-		let x = 100;
-  		let y = 100;
   		let size = SnakeBody.getSize();
 		let random = Random.new();
+		let x = 100;
+  		let y = 100;
 
   		do draw();
   		return this;
@@ -47,7 +47,7 @@ class Fruit
 
 	method boolean resetPosition(int collisionX, int collisionY)
 	{
-		if(collisionX > (x - 4) & collisionX < (x + 8) & collisionY > (y - 4) & collisionY < (y + 8))
+		if(collisionX > (x - 4) & collisionY > (y - 4) & collisionX < (x + 8) & collisionY < (y + 8))
 		{	
 			do setPosition();
 			return true;
