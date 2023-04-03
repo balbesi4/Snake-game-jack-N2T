@@ -42,7 +42,7 @@ class Game
             while ((key = 0) & (~skip)) 
             {  
                 let key = Keyboard.keyPressed();
-                if(fruit.resetFruitPos(head.getX(), head.getY()))
+                if(fruit.resetPosition(head.getX(), head.getY()))
                 { 
                     do head.incrementTailCount();
                     let count = count + 1;

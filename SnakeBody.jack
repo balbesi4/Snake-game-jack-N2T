@@ -36,7 +36,7 @@ class SnakeBody
 
 	method void draw() 
 	{
-        do reDraw(true, x, y, x + size, y + size)
+        do reDraw(true, x, y, x + size, y + size);
       	return;
   	}
 
@@ -66,7 +66,7 @@ class SnakeBody
 		{
       		if (y > 1) 
 			{	
-                do reDraw(false, x, (y + size) - 1, x + size, y + size)
+                do reDraw(false, x, (y + size) - 1, x + size, y + size);
          		
          		let newHeadX = x;
          		let newHeadY = y;
@@ -74,7 +74,7 @@ class SnakeBody
          		let y = y - 2;
 
          	
-                do reDraw(true, x, y, x + size, y + 1)
+                do reDraw(true, x, y, x + size, y + 1);
          		
          		//test for tail
          		if(~(tailCount = 0))
@@ -108,13 +108,13 @@ class SnakeBody
 		{
 			if ((y + size) < 254) 
 			{
-                do reDraw(false, x, y, x + size, y + 1)
+                do reDraw(false, x, y, x + size, y + 1);
 
          		let newHeadX = x;
          		let newHeadY = y;
          		let y = y + 2;
 
-                do reDraw(true, x, (y + size) - 1, x + size, y + size)
+                do reDraw(true, x, (y + size) - 1, x + size, y + size);
 
          		if(~(tailCount = 0))
 				{
@@ -144,12 +144,12 @@ class SnakeBody
 		{
 			if (x > 1) 
 			{
-                do reDraw(false, (x + size) - 1, y, x + size, y + size)
+                do reDraw(false, (x + size) - 1, y, x + size, y + size);
 
          		let newHeadX = x;
          		let newHeadY = y;
          		let x = x - 2;
-                do reDraw(true, x, y, x + 1, y + size)
+                do reDraw(true, x, y, x + 1, y + size);
 
          		if(~(tailCount = 0))
 				{
@@ -179,13 +179,13 @@ class SnakeBody
 		{
 			if ((x + size) < 510) 
 			{
-                do reDraw(false, x, y, x + 1, y + size)
+                do reDraw(false, x, y, x + 1, y + size);
 
          		let newHeadX = x;
          		let newHeadY = y;
          		let x = x + 2;
 
-                do reDraw(true, (x + size) - 1, y, x + size, y + size)
+                do reDraw(true, (x + size) - 1, y, x + size, y + size);
          		if(~(tailCount = 0))
 				{
          			do drawTail(newHeadX, newHeadY);
@@ -213,7 +213,7 @@ class SnakeBody
 	//draws tail
 	method void drawTail(int newHeadX, int newHeadY)
 	{
-		var int prevX, prevY, temp, tempY, index;
+		var int prevX, prevY, tempX, tempY, index;
 		let index = 0;
 
 		//hold first coord in temp var
@@ -226,8 +226,8 @@ class SnakeBody
 		//repeat process for all tail pieces
 		while(index < tailCount)
 		{	
-            do reDraw(false, prevX, prevY, prevX + size, prevY + size)
-            do reDraw(true, bodyXs[index], bodyYs[index], bodyXs[index] + size, bodyYs[index] + size)
+            do reDraw(false, prevX, prevY, prevX + size, prevY + size);
+            do reDraw(true, bodyXs[index], bodyYs[index], bodyXs[index] + size, bodyYs[index] + size);
 
 			let tempX = bodyXs[index + 1];
 			let tempY = bodyYs[index + 1];

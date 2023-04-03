@@ -2,7 +2,7 @@ class Main
 {
     function void main() 
     {
-        var SnakeGame game;
+        var Game game;
         let game = Game.new();
         do game.start();
         do game.showStats();

@@ -51,7 +51,7 @@ class Fruit
 
 	method boolean resetPosition(int collisionX, int collisionY)
 	{
-		if(collisionX > (x - 4) & collisionY > (y - 4) & collisionX < (x + 8) & collisionY < (y + 8))
+		if((collisionX > (x - 4)) & (collisionY > (y - 4)) & (collisionX < (x + 8)) & (collisionY < (y + 8)))
 		{	
 			do setPosition();
 			return true;
