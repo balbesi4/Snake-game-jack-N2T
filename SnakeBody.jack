@@ -1,0 +1,246 @@
+class SnakeBody
+{
+	field int x, y, newHeadX, newHeadY, size, tailCount;
+	field Array bodyXs, bodyYs;
+
+	constructor SnakeBody new(int nextx, int nexty)
+	{
+		let x = nextx;
+		let y = nexty;
+		let tailCount = 0;
+
+		let size = 4;
+
+		let bodyXs = Array.new(500);
+		let bodyYs = Array.new(500);
+
+		do draw();
+
+		return this;
+	}
+
+    method void reDraw(boolean color, int X1, int Y1, int X2, int Y2)
+    {
+        do Screen.setColor(color);
+        do Screen.drawRectangle(X1, Y1, X2, Y2);
+        return;
+    }
+
+	method void dispose()
+	{
+		do bodyXs.dispose();
+		do bodyYs.dispose();
+        do Memory.deAlloc(this);
+      	return;
+   	}
+
+	method void draw() 
+	{
+        do reDraw(true, x, y, x + size, y + size)
+      	return;
+  	}
+
+	method int getX()
+	{
+		return x;
+	}
+
+	method int getY()
+	{
+		return y;
+	}
+
+	method void incrementTailCount()
+	{
+		let tailCount = tailCount + 1;
+		return;
+	}
+
+
+   	method boolean moveBody(int direction) 
+	{
+		var int index;
+		let index = 0;
+
+		if(direction = 1)
+		{
+      		if (y > 1) 
+			{	
+                do reDraw(false, x, (y + size) - 1, x + size, y + size)
+         		
+         		let newHeadX = x;
+         		let newHeadY = y;
+
+         		let y = y - 2;
+
+         	
+                do reDraw(true, x, y, x + size, y + 1)
+         		
+         		//test for tail
+         		if(~(tailCount = 0))
+				{
+         			do drawTail(newHeadX, newHeadY);
+         		}
+
+     	 	}
+
+     	 	//test for wall contact
+			if ((y < 0) | (y = 0)) 
+			{
+				return true;
+			}
+
+			//test for tail contact
+			while(index < tailCount)
+			{
+				if((x = bodyXs[index]) & (y = bodyYs[index]))
+				{
+					return true;
+				}
+
+				let index = index + 1;
+			}	
+
+			return false;
+		}
+
+		if(direction = 2)
+		{
+			if ((y + size) < 254) 
+			{
+                do reDraw(false, x, y, x + size, y + 1)
+
+         		let newHeadX = x;
+         		let newHeadY = y;
+         		let y = y + 2;
+
+                do reDraw(true, x, (y + size) - 1, x + size, y + size)
+
+         		if(~(tailCount = 0))
+				{
+         			do drawTail(newHeadX, newHeadY);
+				}		
+      		}
+
+			if (((y + size) > 254) | ((y + size) = 254)) 
+			{
+				return true;
+			}
+
+			while(index < tailCount)
+			{
+				if((x = bodyXs[index]) & (y = bodyYs[index]))
+				{
+					return true;
+				}
+
+				let index = index + 1;
+			}
+
+			return false;
+		}
+
+		if(direction = 3)
+		{
+			if (x > 1) 
+			{
+                do reDraw(false, (x + size) - 1, y, x + size, y + size)
+
+         		let newHeadX = x;
+         		let newHeadY = y;
+         		let x = x - 2;
+                do reDraw(true, x, y, x + 1, y + size)
+
+         		if(~(tailCount = 0))
+				{
+         			do drawTail(newHeadX, newHeadY);
+         		}
+      		}
+
+			if ((x < 0) | (x = 0)) 
+			{
+				return true;
+			}
+
+
+			while(index < tailCount)
+			{
+				if((x = bodyXs[index]) & (y = bodyYs[index]))
+				{
+					return true;
+				}
+				let index = index + 1;
+			}
+
+			return false;
+		}
+
+		if(direction = 4)
+		{
+			if ((x + size) < 510) 
+			{
+                do reDraw(false, x, y, x + 1, y + size)
+
+         		let newHeadX = x;
+         		let newHeadY = y;
+         		let x = x + 2;
+
+                do reDraw(true, (x + size) - 1, y, x + size, y + size)
+         		if(~(tailCount = 0))
+				{
+         			do drawTail(newHeadX, newHeadY);
+         		}
+      		}
+
+			if (((x + size) > 510) | ((x + size) = 510)) 
+			{
+				return true;
+			}
+
+			while(index < tailCount)
+			{
+				if((x = bodyXs[index]) & (y = bodyYs[index]))
+				{
+					return true;
+				}
+				let index = index + 1;
+			}
+			return false;
+		}
+		return false;	
+   	}
+
+	//draws tail
+	method void drawTail(int newHeadX, int newHeadY)
+	{
+		var int prevX, prevY, temp, tempY, index;
+		let index = 0;
+
+		//hold first coord in temp var
+		let prevX = bodyXs[0];
+		let prevY = bodyYs[0];
+
+		let bodyXs[0] = newHeadX;
+		let bodyYs[0] = newHeadY;
+
+		//repeat process for all tail pieces
+		while(index < tailCount)
+		{	
+            do reDraw(false, prevX, prevY, prevX + size, prevY + size)
+            do reDraw(true, bodyXs[index], bodyYs[index], bodyXs[index] + size, bodyYs[index] + size)
+
+			let tempX = bodyXs[index + 1];
+			let tempY = bodyYs[index + 1];
+
+			//set next piece to previous piece coord	
+         	let bodyXs[index + 1] = prevX;
+         	let bodyYs[index + 1] = prevY;
+
+         	let prevX = tempX;
+         	let prevY = tempY;
+
+         	let index = index + 1;
+		}
+		return;
+	}
+}
