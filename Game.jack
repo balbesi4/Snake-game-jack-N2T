@@ -1,0 +1,78 @@
+class Game
+{
+    field SnakeBody head;
+    field Fruit fruit;
+    field int dir, count;
+
+    constructor Game new()
+    { 
+        let count = 0;
+        let dir = 0;
+        let head = SnakeBody.new(254, 126);
+        let fruit = Fruit.new();
+        return this; 
+    }
+ 
+    method void showStats()
+    {
+        var String str;
+        let str = "Score: ";
+        do Screen.clearScreen();
+        do Output.printString(str);
+        do Output.printInt(count);
+        return;
+    }
+
+    method void dispose()
+    {
+        do head.dispose();
+        do fruit.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void start()
+    {
+        var boolean skip;
+        var char key;
+        var int lastDir;
+        let skip = false;  
+        while(~skip)
+        {
+            while ((key = 0) & (~skip)) 
+            {  
+                let key = Keyboard.keyPressed();
+                if(fruit.resetFruitPos(head.getX(), head.getY()))
+                { 
+                    do head.incrementTailCount();
+                    let count = count + 1;
+                }
+                let skip = head.moveBody(dir);
+                do Sys.wait(10); 
+            }
+            if (key = 81)  
+            { 
+                let skip = true;
+            }
+            if  ((key = 131) & (~(lastDir = 2)))
+            { 
+                let dir = 1; 
+            }
+            if ((key = 133) & (~(lastDir = 1)))
+            { 
+                let dir = 2; 
+            }
+            if ((key = 130) & (~(lastDir = 4)))
+            { 
+                let dir = 3; 
+            }
+            if ((key = 132) & (~(lastDir = 3)))
+            { 
+                let dir = 4; 
+            }
+            let lastDir = dir;
+            let key = 0;
+        }
+        return;  
+    }
+}

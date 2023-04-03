@@ -1,0 +1,65 @@
+class Random
+{
+    field int horizontalX;
+    field int verticalY;
+    static int counter;
+    static int dimensionX;
+    static int dimensionY;
+
+    constructor Random new()
+    {
+        let verticalY = 0;
+        let dimensionX = 512;
+        let dimensionY = 256;
+        let counter = 100;
+        let horizontalX = 0;
+        return this;
+    }
+
+    method void dispose()
+    {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int randomX(int x)
+    {
+        var int t;
+        let horizontalX = dimensionX + x + counter;
+        let t = horizontalX - dimensionX;
+        while(t > dimensionX)
+        {
+            let t = t -  dimensionX;
+        }
+        if(t > 508)
+        {
+            let t = 508;
+        }
+        if(t < 4)
+        {
+            let t = 4;
+        }
+        return t;
+    }
+
+    method int randomY(int y)
+    {
+        var int t;
+        let verticalY = dimensionY + y + counter;
+        let t = verticalY - dimensionY;
+        while(t > dimensionY)
+        {
+            let t = t -  dimensionY;
+        }
+        if(t > 252)
+        {
+            let t = 252;
+        }
+        if(t < 4)
+        {
+            let t = 4;
+        }
+        let counter = counter + 100;
+        return t;
+    }
+}
